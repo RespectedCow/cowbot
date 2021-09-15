@@ -4,7 +4,7 @@
 import discord
 from discord.ext import commands
 import subprocess
-import urllib.request
+import socket
  
 TOKEN = open("token.txt", "r").readline()
 client = commands.Bot(command_prefix = "cowbot ")
@@ -30,6 +30,14 @@ async def get(ctx, arg):
 
         await ctx.send("The ip is " + filtered + ":25565")
         print(filtered)
+    elif arg == "status":
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex(('127.0.0.1',25565))
+        if result == 0:
+            await ctx.send("Server is open")
+        else:
+            await ctx.send("Server is closed")
+        sock.close()
     else:
         await ctx.send("Unknown argument")
 
