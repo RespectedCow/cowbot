@@ -57,7 +57,8 @@ async def start(ctx, arg):
         if result == 0:
             await ctx.send("Server is open")
         else:
-            subprocess.call(["./start_server.sh"])
+            subprocess.call("cd ~/minecraft")
+            subprocess.call("./minecraft.sh")
 
             await ctx.send("Server startup process has began")                 
     else:
