@@ -38,8 +38,30 @@ async def get(ctx, arg):
         else:
             await ctx.send("Server is closed")
         sock.close()
+    elif arg == "commands":
+        await ctx.send("""
+        Commands are:
+        status
+        ip
+        commands
+        """)
     else:
         await ctx.send("Unknown argument")
+
+# STarts the server
+@client.command(pass_context=True)
+async def start(ctx, arg):
+    if arg == "server":
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex(('127.0.0.1',25565))
+        if result == 0:
+            await ctx.send("Server is open")
+        else:
+            subprocess.call(["./start_server.sh"])
+
+            await ctx.send("Server startup process has began")                 
+    else:
+        await ctx.send("Invalid argument")
 
 # validates server for ip update
 @client.command(pass_context=True)
